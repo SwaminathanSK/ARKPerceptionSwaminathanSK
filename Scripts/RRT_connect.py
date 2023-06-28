@@ -35,6 +35,10 @@ class RrtConnect:
         self.V1 = [self.s_start]
         self.V2 = [self.s_goal]
 
+        self.env = env.Env()
+        self.plotting = plotting.Plotting(s_start, s_goal)
+        self.utils = utils.Utils()
+
         self.x_range = self.env.x_range
         self.y_range = self.env.y_range
         self.obs_circle = self.env.obs_circle
@@ -85,7 +89,8 @@ class RrtConnect:
 
     @staticmethod
     def is_node_same(node_new_prim, node_new):
-        if node_new_prim.x == node_new.x and node_new_prim.y == node_new.y:
+        if node_new_prim.x == node_new.x and \
+                node_new_prim.y == node_new.y:
             return True
 
         return False
@@ -101,7 +106,8 @@ class RrtConnect:
 
     @staticmethod
     def nearest_neighbor(node_list, n):
-        return node_list[int(np.argmin([math.hypot(nd.x - n.x, nd.y - n.y) for nd in node_list]))]
+        return node_list[int(np.argmin([math.hypot(nd.x - n.x, nd.y - n.y)
+                                        for nd in node_list]))]
 
     def new_state(self, node_start, node_end):
         dist, theta = self.get_distance_and_angle(node_start, node_end)
